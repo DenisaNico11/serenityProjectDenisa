@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Random;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.openqa.selenium.By;
@@ -18,16 +19,25 @@ import net.serenitybdd.junit.runners.SerenityRunner;
 import net.thucydides.core.annotations.Managed;
 import net.thucydides.core.annotations.Steps;
 
+//import static com.github.rjeschke.txtmark.HTMLElement.title;
+
 @RunWith(SerenityRunner.class)
 public class MigEmagTest {
-	
+
+    String title;
+
+//    @Before
+//	public void maxiPage(){
+//		driver.manage().window().maximize();
+//	}
 
     @Managed(uniqueSession = true)
     public WebDriver driver;
     
-	WebElement addToCart, search, cartDetails, dynamicElement, dynamicElement2, dynamicElement3;
+	//WebElement addToCart, search, cartDetails, dynamicElement, dynamicElement2, dynamicElement3;
 	Random rand = new Random();
 	String searchedProduct = "telefon";
+	//String selectedProduct = rand.toString();
 	
 	@Steps
 	public EmagSteps emagSteps;
@@ -50,27 +60,43 @@ public class MigEmagTest {
 //		int pageNumber = rand.nextInt(noOfPages) + 1;
 //		System.out.println(pageNumber);
 //		driver.get("https://emag.ro/search/" + searchedProduct + "/p" + pageNumber);
-		
-		emagSteps.navigateToRandomResultsPage(searchedProduct);
-		
-		dynamicElement = (new WebDriverWait(driver, 10))
-				.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(".lazy")));
-		List<WebElement> products = driver.findElements(By.cssSelector(".lazy"));
-		int product = rand.nextInt(products.size()) + 1;
-		System.out.println(product);
-		products.get(product).click();
-		String title = driver.findElement(By.cssSelector(".page-title")).getText();
-		dynamicElement3 = (new WebDriverWait(driver, 10)).until(ExpectedConditions.presenceOfElementLocated(
-				By.cssSelector(".btn.btn-primary.btn-emag.btn-block.yeahIWantThisProduct.gtm_680klw")));
-		addToCart = driver
-				.findElement(By.cssSelector(".btn.btn-primary.btn-emag.btn-block.yeahIWantThisProduct.gtm_680klw"));
-		addToCart.click();
-		dynamicElement2 = (new WebDriverWait(driver, 10))
-				.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(".btn")));
-		cartDetails = driver.findElement(By.cssSelector(".btn"));
-		cartDetails.submit();
-		String productTitle = driver.findElement(By.cssSelector(".line-item-title.main-product-title")).getText();
-		Assert.assertEquals(title, productTitle);
-	}
+		//emagSteps.navigateToRandomResults(searchedProduct);
 
+		emagSteps.clickOnRandomProduct();
+        emagSteps.getProductTitleAndClickOnAddToCartButton();
+        emagSteps.clickOnShowCartDetails();
+        emagSteps.checkByTitleIfProductWasAddedInCart();
+
+		
+//		dynamicElement = (new WebDriverWait(driver, 10))
+//				.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(".lazy")));
+//		List<WebElement> products = driver.findElements(By.cssSelector(".lazy"));
+//		int product = rand.nextInt(products.size()) + 1;
+//		System.out.println(product);
+//		products.get(product).click();
+//		String title = driver.findElement(By.cssSelector(".page-title")).getText();
+
+		//emagSteps.navigateToRandomProductPage(selectedProduct);
+
+
+//		dynamicElement3 = (new WebDriverWait(driver, 10)).until(ExpectedConditions.presenceOfElementLocated(
+//				By.cssSelector(".btn.btn-primary.btn-emag.btn-block.yeahIWantThisProduct.gtm_680klw")));
+//		addToCart = driver
+//				.findElement(By.cssSelector(".btn.btn-primary.btn-emag.btn-block.yeahIWantThisProduct.gtm_680klw"));
+//		addToCart.click();
+
+
+
+
+//		dynamicElement2 = (new WebDriverWait(driver, 10))
+//				.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(".btn")));
+//		cartDetails = driver.findElement(By.cssSelector(".btn"));
+//		cartDetails.submit();
+//
+//
+//
+//
+//		String productTitle = driver.findElement(By.cssSelector(".line-item-title.main-product-title")).getText();
+//		Assert.assertEquals(title, productTitle);
+	}
 }

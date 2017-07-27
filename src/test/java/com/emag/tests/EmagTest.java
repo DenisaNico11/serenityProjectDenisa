@@ -22,7 +22,7 @@ public class EmagTest {
 
 	@Before
 	public void openChromeTest() {
-		System.setProperty("webdriver.chrome.driver", "/home/vvoicu/git/test-automation/src/test/resources/drivers/chromedriverlinux64");
+		System.setProperty("webdriver.chrome.driver", "C:/Users/denisacojanu/Desktop/serenity/ecomauto-master/src/test/resources/drivers/chromedriver.exe");
 		driver = new ChromeDriver();
 		driver.get("https://emag.ro");
 	}
