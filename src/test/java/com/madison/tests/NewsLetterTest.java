@@ -6,6 +6,8 @@ import net.thucydides.core.annotations.Managed;
 import net.thucydides.core.annotations.Pending;
 import net.thucydides.core.annotations.Steps;
 
+import java.util.UUID;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.openqa.selenium.WebDriver;
@@ -17,7 +19,7 @@ import com.madison.steps.NewsLetterSteps;
 @RunWith(SerenityRunner.class)
 public class NewsLetterTest {
 	
-	private static final String URL = null;
+	//private static final String URL = null;
 
 	@Managed(uniqueSession = true)
 	public WebDriver webdriver;
@@ -25,9 +27,9 @@ public class NewsLetterTest {
 	@Steps
 	public NewsLetterSteps newsLetterSteps;
 	
-	String invalidEmailAddress ="denisatest.test";
-	String expectedMessage = "Thank you for your subscription.";
-	String failedExpectedMessage = "There was a problem with the subscription: This email address is already assigned to another user."; 
+	String invalidEmailAddress ="denis@atest.yu";
+//	String expectedMessage = "Thank you for your subscription.";
+//	String failedExpectedMessage = "There was a problem with the subscription: This email address is already assigned to another user."; 
 	
 	
 	
@@ -43,11 +45,31 @@ public class NewsLetterTest {
 //	}
 	
 	@Test
-	public void invalidEmailAddress() {
-		newsLetterSteps.openMadisnIsland(URL);
+	public void checkSubscriptionWithInvalidEmailAddress() {
+		newsLetterSteps.openMadisnIsland(Constants.BASE_URL);
 		newsLetterSteps.clickOnNewsletter();
-		newsLetterSteps.enterEmail(invalidEmailAddress);
-		newsLetterSteps.clickOnSubscribe(); //invalid email address 
+		newsLetterSteps.enterEmail(Constants.INVALID_EMAIL);
+		newsLetterSteps.clickOnSubscribe(); 
+		newsLetterSteps.checkInvalidEmailSubscriptionMessage();
+	}
+	
+	@Test
+	public void checkSubscriptionWithUsedEmailAddress() {
+		newsLetterSteps.openMadisnIsland(Constants.BASE_URL);
+		newsLetterSteps.clickOnNewsletter();
+		newsLetterSteps.enterEmail(Constants.SUBSCRIBED_EMAIL);
+		newsLetterSteps.clickOnSubscribe(); 
+		newsLetterSteps.checkUsedEmailSubscriptionMessage();
+	}
+	
+	@Test
+	public void checkSubscriptionWithNewEmailAddress() {
+		newsLetterSteps.openMadisnIsland(Constants.BASE_URL);
+		newsLetterSteps.clickOnNewsletter();
+		String email = "denisa.test" + UUID.randomUUID().toString() + "@test.com";
+		newsLetterSteps.enterEmail(email);
+		newsLetterSteps.clickOnSubscribe(); 
+		newsLetterSteps.checkSuccessfullSubscriptionMessage();
 	}
 //	@Pending
 //	@Test

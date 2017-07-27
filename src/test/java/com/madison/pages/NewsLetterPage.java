@@ -28,6 +28,9 @@ public class NewsLetterPage extends PageObject {
 	
 	@FindBy(css=".error-msg") 
 	private WebElementFacade subscriptionFailMsg;
+	
+	@FindBy(css=".messages span")
+	private WebElementFacade responseMessage; 
 		
 	public void navigationTo(String url) {
 		getDriver().get(url);
@@ -57,7 +60,7 @@ public class NewsLetterPage extends PageObject {
 	}
 	*/
 	
-	public void checkSubscriptionMessage(){
+	/*public void checkSubscriptionMessage(){
 		String inputEmail = enteredEmail.getText();
 		if(inputEmail.equals(Constants.EMAIL)) {
 			Assert.assertTrue("Erorr", subscriptionFailMsg.containsText(Constants.FAIL_MESSAGE));
@@ -66,6 +69,10 @@ public class NewsLetterPage extends PageObject {
 			Assert.assertTrue("Erorr", subscriptionSuccessMsg.containsText(Constants.PASS_MESSAGE));
 			System.out.println("Passed");
 		}
+	}*/
+	
+	public String getResponseMessage(){
+		return responseMessage.getText();
 	}
 }
 

@@ -22,7 +22,7 @@ public class RegisterTest {
 	
 	String url = "http://qa3.madison.com/";
 	
-//	Testing register
+
 	@Test
 	public void register(){
 		registerSteps.openMadisnIsland(url);

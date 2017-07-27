@@ -1,9 +1,12 @@
 package com.madison.steps;
 
+import org.junit.Assert;
+
 import com.emag.pages.CartPage;
 import com.emag.pages.EmagHomePage;
 import com.emag.pages.ProductPage;
 import com.emag.pages.SearchResultsList;
+import com.madison.pages.Constants;
 import com.madison.pages.NewsLetterPage;
 
 import net.serenitybdd.core.Serenity;
@@ -48,10 +51,18 @@ public class NewsLetterSteps extends ScenarioSteps{
 //	}
 //	
 	@Step
-	public void checkSubscriptionMessage() {
-		
-		newsletter.checkSubscriptionMessage();
-		
+	public void checkSuccessfullSubscriptionMessage() {
+		Assert.assertTrue(newsletter.getResponseMessage().contentEquals(Constants.SUCCESSFULL_NEWSLETTER_SUBSCRIPTION_MESSAGE));
+	}
+	
+	@Step
+	public void checkUsedEmailSubscriptionMessage() {
+		Assert.assertTrue(newsletter.getResponseMessage().contentEquals(Constants.USED_EMAIL_NEWSLETTER_SUBSCRIPTION_MESSAGE));
+	}
+	
+	@Step
+	public void checkInvalidEmailSubscriptionMessage() {
+		Assert.assertTrue(newsletter.getResponseMessage().contentEquals(Constants.INVALID_EMAIL_NEWSLETTER_SUBSCRIPTION_MESSAGE));
 	}
 	
 }	
